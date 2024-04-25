@@ -68,9 +68,32 @@ bool focusWindow(const WindowHandle windowHandle) {
         const auto allowSetForeground = AllowSetForegroundWindow(processId);
         const auto setTopLevel = BringWindowToTop(hWnd);
         const auto setForeground = SetForegroundWindow(hWnd);
+        const auto setActive = SetActiveWindow(hWnd);
 
         // Try to set the window to the foreground
-        return allowSetForeground && setTopLevel && setForeground;
+        if (allowSetForeground && setTopLevel && setForeground && setActive)
+        {
+            return true;
+        }
+
+        // get the current thread id
+        DWORD dwCurrentThread = GetCurrentThreadId();
+        DWORD dwFGThread = GetWindowThreadProcessId(GetForegroundWindow(), NULL);
+
+        // attach the input to the current thread
+        AttachThreadInput(dwCurrentThread, dwFGThread, TRUE);
+
+        SetForegroundWindow(hWnd);
+        SetCapture(hWnd);
+        SetFocus(hWnd);
+        SetActiveWindow(hWnd);
+        EnableWindow(hWnd, TRUE);
+
+        // detach the input from the current thread
+        AttachThreadInput(dwCurrentThread, dwFGThread, FALSE);
+
+        // check if the window is now in the foreground
+        return GetForegroundWindow() == hWnd;
     }
     return false;
 }
