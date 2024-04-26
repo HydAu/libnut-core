@@ -29,11 +29,14 @@ export interface Rect {
   height: number;
 }
 
+export type PressDirection = 'down' | 'up';
+export type MouseButton = 'left' | 'middle' | 'right';
+
 export function setKeyboardDelay(ms: number): void;
 export function keyTap(key: string, modifier?: string | string[]): void;
 export function keyToggle(
   key: string,
-  down: string,
+  pressDirection: PressDirection,
   modifier?: string | string[]
 ): void;
 export function typeString(string: string): void;
@@ -42,7 +45,7 @@ export function setMouseDelay(delay: number): void;
 export function moveMouse(x: number, y: number): void;
 export function moveMouseSmooth(x: number, y: number): void;
 export function mouseClick(button?: string, double?: boolean): void;
-export function mouseToggle(down?: string, button?: string): void;
+export function mouseToggle(pressDirection?: PressDirection, button?: MouseButton): void;
 export function dragMouse(x: number, y: number): void;
 export function scrollMouse(x: number, y: number): void;
 export function getMousePos(): Point;
