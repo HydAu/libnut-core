@@ -50,6 +50,6 @@ jobs:
       - name: Dispatch snapshot release
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           repository: hydau/nut.js
           event-type: snapshot-release
