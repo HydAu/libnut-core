@@ -41,18 +41,6 @@ jobs:
         with:
           working-directory: ./test/window-integration-tests
           run: npm cit
-      - name: Publish snapshot release
-        if: ${{matrix.os == 'ubuntu-20.04' || matrix.os == 'macos-11'}}
-        run: ./.build/pre-release.sh
-        shell: bash
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Publish Windows snapshot release
-        if: ${{matrix.os == 'windows-2019'}}
-        run: ./.build/pre-release.ps1
-        shell: powershell
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   dispatch:
     needs:
