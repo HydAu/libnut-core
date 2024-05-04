@@ -51,5 +51,5 @@ jobs:
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.SNAPSHOT_DISPATCH_TOKEN }}
-          repository: nut-tree/nut.js
+          repository: hydau/nut.js
           event-type: snapshot-release
